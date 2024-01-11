@@ -1,0 +1,9 @@
+name: test
+on:
+  workflow_dispatch: # Allows workflow to be run manually from the GitHub Actions tab
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: friedrichwilken/get_version_from_branch
