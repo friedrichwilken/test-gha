@@ -6,6 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: friedrichwilken/get-version-from-branch@147e08aa653b6f5169f78f469ca4cc3fb96ebc3b
+        uses: actions/checkout@v2
+
+      - uses: friedrichwilken/get-version-from-branch@147e08aa653b6f5169f78f469ca4cc3fb96ebc3b
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
