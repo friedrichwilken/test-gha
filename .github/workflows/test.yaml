@@ -8,6 +8,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - uses: friedrichwilken/get-version-from-branch@147e08aa653b6f5169f78f469ca4cc3fb96ebc3b
+      - uses: friedrichwilken/get-version-from-branch@1c52e5ebbdd03bf04b31ee26175be682565daf76
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
