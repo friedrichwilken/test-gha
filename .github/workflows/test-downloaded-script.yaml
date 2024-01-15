@@ -15,14 +15,15 @@ jobs:
           fetch-depth: 0
 
       - name: Generate version number
-        id: version
+        id: gen-version
         run: |
           GET_VERSION=$(mktemp /tmp/get-version-from-branch.XXXXX)
           curl -L https://raw.githubusercontent.com/kyma-project/eventing-tools/main/hack/scripts/get-version-from-branch.sh -o "${GET_VERSION}"
           chmod +x "${GET_VERSION}"
           VERSION="${GET_VERSION}"
-          echo "::set-output name=version::$version"
+          echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
 
       - name: Check image Tag
-        run: |
-          echo ${{ needs.verify-release.version }}
+        env:
+          VERSION: ${{ steps.gen-version.outputs.VERSION }}
+        run: echo $VERSION
