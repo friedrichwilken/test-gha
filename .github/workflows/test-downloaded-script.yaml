@@ -23,7 +23,7 @@ jobs:
           chmod +x "${GET_VERSION}"
 
           # get version via script
-          VERSION="${GET_VERSION}"
+          VERSION=$("${GET_VERSION}")
           echo "${VERSION}"
 
           # push version to output environment file
