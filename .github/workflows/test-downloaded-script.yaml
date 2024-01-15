@@ -1,0 +1,28 @@
+name: "Create release"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  verify-release:
+    name: Verify release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate version number
+        id: version
+        run: |
+          GET_VERSION=$(mktemp /tmp/get-version-from-branch.sh)
+          curl -L https://raw.githubusercontent.com/kyma-project/eventing-tools/main/hack/scripts/get-version-from-branch.sh -o "${GET_VERSION}"
+          chmod +x "${GET_VERSION}"
+          VERSION="${GET_VERSION}"
+          echo "::set-output name=version::$version"
+
+      - name: Check image Tag
+        run: |
+          echo ${{ needs.verify-release.version }}
