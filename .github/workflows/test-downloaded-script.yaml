@@ -29,7 +29,10 @@ jobs:
           # push version to output environment file
           echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
 
-      - name: Check image Tag
+      - name: Check image Tag one way
+        run: echo $VERSION
+
+      - name: Check image Tag another way
         env:
           VERSION: ${{ steps.gen-version.outputs.VERSION }}
         run: echo $VERSION
