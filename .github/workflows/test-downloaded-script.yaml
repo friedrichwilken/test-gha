@@ -7,7 +7,8 @@ jobs:
   verify-release:
     name: Verify release
     runs-on: ubuntu-latest
-
+    outputs:
+      version: ${{ steps.gen-version.outputs.VERSION }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -29,10 +30,18 @@ jobs:
           # push version to output environment file
           echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
 
-      - name: Check image Tag one way
-        run: echo $VERSION
-
       - name: Check image Tag another way
         env:
           VERSION: ${{ steps.gen-version.outputs.VERSION }}
+        run: echo $VERSION
+
+  print-release-version:
+    name: print release version
+    runs-on: ubuntu-latest
+    needs: verify-release
+    env:
+      VERSION: ${{ needs.verify-release.outputs.VERSION }}
+
+    steps:
+      - name: print version in another job
         run: echo $VERSION
