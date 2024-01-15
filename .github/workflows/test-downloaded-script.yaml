@@ -17,10 +17,16 @@ jobs:
       - name: Generate version number
         id: gen-version
         run: |
+          # get script
           GET_VERSION=$(mktemp /tmp/get-version-from-branch.XXXXX)
           curl -L https://raw.githubusercontent.com/kyma-project/eventing-tools/main/hack/scripts/get-version-from-branch.sh -o "${GET_VERSION}"
           chmod +x "${GET_VERSION}"
+
+          # get version via script
           VERSION="${GET_VERSION}"
+          echo "${VERSION}"
+
+          # push version to output environment file
           echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
 
       - name: Check image Tag
