@@ -11,7 +11,6 @@ func main() {
 }
 
 // this comment is here for no reason.
-// here is another one.
 func sayHello(s string) {
 	fmt.Printf("Hello %s", s)
 }
