@@ -20,11 +20,15 @@ on:
 
 jobs:
   unit-test-from-main:
+    name: "run unit tests from main"
     uses: friedrichwilken/reusable-workflows/.github/workflows/reusable-unti-test.yml@main
   unit-test-from-commit:
+    name: "run unit tests from commit"
     uses: friedrichwilken/reusable-workflows/.github/workflows/reusable-unti-test.yml@1cdf2582602023751be83c717a8a41ab4f281242
 
   linting-from-main:
+    name: "run linting from main"
     uses: friedrichwilken/reusable-workflows/.github/workflows/lint-code-reusable.yml@main
   linting-from-commit:
+    name: "run linting from commit"
     uses: friedrichwilken/reusable-workflows/.github/workflows/lint-code-reusable.yml@d89d032c41427de260f3ba786e738d94e2c68905
