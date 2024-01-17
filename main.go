@@ -10,6 +10,7 @@ func main() {
 	sayHello(someOne)
 }
 
+// this comment is here for no reason.
 func sayHello(s string) {
 	fmt.Printf("Hello %s", s)
 }
