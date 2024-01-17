@@ -20,6 +20,11 @@ on:
 
 jobs:
   unit-test-from-main:
-    uses: friedrichwilken/get-version-from-branch/.github/workflows/reusable-unti-test.yml@main
+    uses: friedrichwilken/reusable-workflows/.github/workflows/reusable-unti-test.yml@main
   unit-test-from-commit:
-    uses: friedrichwilken/get-version-from-branch/.github/workflows/reusable-unti-test.yml@1cdf2582602023751be83c717a8a41ab4f281242
+    uses: friedrichwilken/reusable-workflows/.github/workflows/reusable-unti-test.yml@1cdf2582602023751be83c717a8a41ab4f281242
+
+  linting-from-main:
+    uses: friedrichwilken/reusable-workflows/.github/workflows/lint-code-reusable.yml@main
+  linting-from-commit:
+    uses: friedrichwilken/reusable-workflows/.github/workflows/lint-code-reusable.yml@d89d032c41427de260f3ba786e738d94e2c68905
