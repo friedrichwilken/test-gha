@@ -1,0 +1,25 @@
+name: test
+
+on:
+  push:
+    branches:
+      - main
+      - "release-*"
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
+      - "sec-scanners-config.yaml"
+  pull_request:
+    branches:
+      - main
+      - "release-*"
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
+      - "sec-scanners-config.yaml"
+
+jobs:
+  unit-test-from-main:
+    uses: friedrichwilken/get-version-from-branch/.github/workflows/reusable-unti-test.yml@main
+  unit-test-from-commit:
+    uses: friedrichwilken/get-version-from-branch/.github/workflows/reusable-unti-test.yml@1cdf2582602023751be83c717a8a41ab4f281242
