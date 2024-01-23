@@ -8,6 +8,6 @@ jobs:
     name: "bump the sec-scanners-config"
     uses: friedrichwilken/reusable-workflows/.github/workflows/bump-sec-scanners-config-reusable.yml@main
     with:
-      author: "kyma-eventing-bot"
+      author: "friedrichwilken"
     secrets:
       BOT_PAT: ${{ secrets.BOT_PAT }}
