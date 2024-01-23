@@ -9,3 +9,4 @@ jobs:
     uses: friedrichwilken/reusable-workflows/.github/workflows/bump-sec-scanners-config-reusable.yml@main
     with:
       actor: "${{ github.actor }}"
+    secrets: inherit
