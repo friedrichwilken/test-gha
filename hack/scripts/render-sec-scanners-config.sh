@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-OUTPUT_FILE="module-config-template.yaml"
+OUTPUT_FILE="sec-scanners-config.yaml"
 CURRENT_TIME=$(date +"%T")
 
 # Generating File.
