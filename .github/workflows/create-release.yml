@@ -4,6 +4,12 @@ on:
   workflow_dispatch:
 
 jobs:
+  get-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "${{ github.repository }}"
+
   bump-sec-scanners-config:
     name: "bump the sec-scanners-config"
     uses: friedrichwilken/reusable-workflows/.github/workflows/bump-sec-scanners-config-reusable.yml@main
