@@ -11,7 +11,7 @@ on:
 
 jobs:
   create-release:
-    uses: friedrichwilken/reusable-workflows/.github/workflows/create-release-reusable.yml@f75dff837fac5efde991956259a691996a520b10
+    uses: friedrichwilken/reusable-workflows/.github/workflows/release-reusable.yml@f75dff837fac5efde991956259a691996a520b10
     with:
       DRY_RUN: ${{ inputs.DRY_RUN }}
     secrets:
