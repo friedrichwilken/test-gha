@@ -39,7 +39,7 @@ jobs:
 
   create-draft-release:
     name: Create a draft release
-    needs: [run-unit-test, run-golint-cli]
+    needs: [gen-version, run-unit-test, run-golint-cli]
     uses: friedrichwilken/reusable-workflows/.github/workflows/create-draft-release-reusable.yml@main
     with:
       VERSION: ${{ needs.gen-version.outputs.VERSION }}
@@ -49,7 +49,7 @@ jobs:
 
   render-and-upload-manifest:
     name: Render and upload the manifests
-    needs: [create-draft-release]
+    needs: [gen-version, create-draft-release]
     uses: friedrichwilken/reusable-workflows/.github/workflows/render-and-upload-manifests-reusbale.yml@main
     with:
       VERSION: ${{ needs.gen-version.outputs.VERSION }}
@@ -60,7 +60,7 @@ jobs:
 
   publish-release:
     if: ${{ !inputs.DRY_RUN }}
-    needs: [render-and-upload-manifest]
+    needs: [gen-version, render-and-upload-manifest]
     name: Publish the release
     uses: friedrichwilken/reusable-workflows/.github/workflows/publish-release-reusable.yml@main
     with:
