@@ -20,7 +20,7 @@ jobs:
     needs: gen-version
     uses: friedrichwilken/reusable-workflows/.github/workflows/bump-sec-scanners-config-reusable.yml@main
     with:
-      VERSON: ${{ needs.gen-version.outputs.VERSION }}
+      VERSION: ${{ needs.gen-version.outputs.VERSION }}
     secrets:
       BOT_PAT: ${{ secrets.BOT_PAT }}
 
