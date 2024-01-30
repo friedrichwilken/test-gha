@@ -60,7 +60,7 @@ jobs:
 
   publish-release:
     if: ${{ !inputs.DRY_RUN }}
-    needs: [render-and-upload-manifests]
+    needs: [render-and-upload-manifest]
     name: Publish the release
     uses: friedrichwilken/reusable-workflows/.github/workflows/publish-release-reusable.yml@main
     with:
