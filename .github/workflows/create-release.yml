@@ -1,4 +1,4 @@
-name: Create Release
+name: Create release
 
 on:
   workflow_dispatch:
@@ -7,22 +7,20 @@ on:
         type: boolean
         default: false
         description: "Dry run: setting this to `true` will skip the final step of publishing the release, leaving it as a draft-release. This can be helpful for testing and debugging. Note that the tag and release are still getting generated and the next run of this result in incremented release version. To avoid this, do not forget to delete the resulting release and tag."
-    secrets:
-      BOT_PAT:
-        required: true
 
 jobs:
   gen-version:
-    name: generate version number from branch
-    uses: friedrichwilken/reusable-workflows/.github/workflows/get-version-from-branch-reusable.yml@main
+    name: Generate semantic version from branch and tags
+    uses: friedrichwilken/reusable-workflows/.github/workflows/get-version-from-release-branch-reusable.yml@main
+
     # outputs: VERSION
 
   bump-sec-scanners-config:
-    name: bump the sec-scandners-config.yaml
+    name: Bump the sec-scandners-config.yaml
     needs: gen-version
-    uses: friedrichwilken/reusable-workflows/.github/workflows/bump-sec-scanners-config.yml@main
+    uses: friedrichwilken/reusable-workflows/.github/workflows/bump-sec-scanners-config-reusable.yml@main
     with:
-      version_tag: ${{ needs.gen-version.outputs.VERSION }}
+      VERSON: ${{ needs.gen-version.outputs.VERSION }}
     secrets:
       BOT_PAT: ${{ secrets.BOT_PAT }}
 
@@ -36,8 +34,36 @@ jobs:
     needs: [gen-version, bump-sec-scanners-config]
     uses: friedrichwilken/reusable-workflows/.github/workflows/lint-reusable.yml@main
 
-  #    create-draft-release:
-  #    name: Create a draft release
+  # todo add step to create a new tag
+  # todo add e2e-upgrade testing
 
-  #    publish-release:
-  #    name: Create a draft release
+  create-draft-release:
+    name: Create a draft release
+    needs: [run-unit-test, run-golint-cli]
+    uses: friedrichwilken/reusable-workflows/.github/workflows/create-draft-release-reusable.yml@main
+    with:
+      VERSION: ${{ needs.gen-version.outputs.VERSION }}
+    secrets:
+      BOT_PAT: ${{ secrets.BOT_PAT }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+  render-and-upload-manifest:
+    name: Render and upload the manifests
+    needs: [create-draft-release]
+    uses: friedrichwilken/reusable-workflows/.github/workflows/render-and-upload-manifests-reusbale.yml@main
+    with:
+      VERSION: ${{ needs.gen-version.outputs.VERSION }}
+      CR_FILE: "somedir/cr_file.yaml"
+      CRD_FILE: "crd_file.yaml"
+    secrets:
+      BOT_PAT: ${{ secrets.BOT_PAT }}
+
+  publish-release:
+    if: ${{ !inputs.DRY_RUN }}
+    needs: [render-and-upload-manifests]
+    name: Publish the release
+    uses: friedrichwilken/reusable-workflows/.github/workflows/publish-release-reusable.yml@main
+    with:
+      VERSION: ${{ needs.gen-version.outputs.VERSION }}
+    secrets:
+      BOT_PAT: ${{ secrets.BOT_PAT }}
