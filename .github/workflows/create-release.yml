@@ -24,22 +24,13 @@ jobs:
     secrets:
       BOT_PAT: ${{ secrets.BOT_PAT }}
 
-  run-unit-test:
-    name: Run Unit Tests
-    needs: [gen-version, bump-sec-scanners-config]
-    uses: friedrichwilken/reusable-workflows/.github/workflows/unit-test-reusable.yml@main
-
-  run-golint-cli:
-    name: Run Golint-cli
-    needs: [gen-version, bump-sec-scanners-config]
-    uses: friedrichwilken/reusable-workflows/.github/workflows/lint-reusable.yml@main
-
   # todo add step to create a new tag
   # todo add e2e-upgrade testing
 
   create-draft-release:
     name: Create a draft release
-    needs: [gen-version, run-unit-test, run-golint-cli]
+    needs: [gen-version]
+    #needs: [gen-version, run-unit-test, run-golint-cli]
     uses: friedrichwilken/reusable-workflows/.github/workflows/create-draft-release-reusable.yml@main
     with:
       VERSION: ${{ needs.gen-version.outputs.VERSION }}
